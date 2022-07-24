@@ -1,5 +1,5 @@
 """
-This is THE Rock Paper Scissors game main script 
+This is the Rock Paper Scissors game main script 
 User plays against the computer
 User gets 5 goes
 """

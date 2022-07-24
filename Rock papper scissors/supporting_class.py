@@ -1,66 +1,99 @@
 """
-Contains the supporting class for OOP Password generator.py
+This script contains the supporting class needed by the Rock Paper Scissors main script 
 """
+
 ### import modules
-import string
+import sys
 import random
 
 ### create class
-class Password:
+class RockPaperScissors():
     """
-    Class for generating a password 
+    Class for playing the Rock Paper Scissors game
+
+    User is welcomed to game
+    User selection (R)ock, (P)aper, (S)cissors is obtained
+    Computer selection (R)ock, (P)aper, (S)cissors is made
+    User and computer selection is compared
+    User selection, Computer selection, User score is displayed
     """
+    
     def __init__(self):
-        """ 
-        Users specify:
-            whether upper case alphabets should be included
-            whether lower case alphabets should be included
-            whether numbers should be included
-            whether special case characters should be included
-            length of the password
         """
-        # Users specify whether upper case alphabets should be included
-        self.az_upper = []
-        self.az_upper_choice = input("Do you want upper case characters in the password?: Y or N ")
-        if self.az_upper_choice == "Y":
-            self.az_upper = string.ascii_uppercase
-        
-        # Users specify whether lower case alphabets should be included
-        self.az_lower = []
-        self.az_lower_choice = input("Do you want lower case characters in the password?: Y or N ")
-        if self.az_lower_choice == "Y":
-            self.az_lower = string.ascii_lowercase
-        
-        # Users specify whether numbers should be included
-        self.numbers = []
-        self.number_choice = input("Do you want numbers in the password?: Y or N ")
-        if self.number_choice == "Y":
-            self.numbers = [x for x in range (0,10)]
-        
-        # Users specify whether special characters should be included
-        self.special = []
-        self.special_choice = input("Do you want special characters in the password?: Y or N ")
-        if self.special_choice == "Y":  
-            self.special = [special for special in '[@_!#$%^&*()<>?/|}{~:]']
-
-        # A combined list of upper case alphabets, lower case alphabets, numbers, special characters based on user specifications
-        self.master = [*self.az_upper, *self.az_lower, *self.numbers, *self.special]
-
-        # Users specify the length of the password 
-        self.length_choice = int(input("How long do you want the password to be?"))
-
-    def gen_pwd(self):
-        """ 
-        Password is generated based on user specifications
+        User is welcomed to game
         """
-        # generating a password as a list
-        self.pwd = []
-        for x in range (0,self.length_choice):
-            self.pwd_choice = random.choice(self.master)
-            self.pwd.append(self.pwd_choice)
 
-        # converting the password list into a string
-        self.pwd_str = "".join([str(elem) for elem in self.pwd])
+        ### provide game instructions to users
+        print("""
+              Welcome to this Rock, Paper, Scissors Game
+              You will play against the computer
+              You get 5 goes
+              Let's see the score you can get  
+              """)
+        
+        ### get user choice to play the game 
+        self.play_choice = input("If you would like to play this game, type Y: ")
 
-        # printing the password 
-        print(self.pwd_str)
+        ### exit the script if users don't want to play
+        if self.play_choice != "Y":
+            sys.exit()
+        
+        ### if users want to play initiate their score
+        else:
+            self.user_score = 0
+
+    def user_choice(self):
+        """
+        User selection (R)ock, (P)aper, (S)cissors is obtained
+        """
+        
+        ### loop until users provide a valid input: R, P, or S
+        while True:
+            self.user_selection = input("""\nType R for Rock or Type P for Paper or Type S for Scissors """)
+            if self.user_selection == "R" or self.user_selection == "P" or self.user_selection == "S" :
+                break
+            else:
+                print("Your input is invalid. Please, try again\n")
+
+    def computer_choice(self):
+        """
+        Random computer selection (R)ock, (P)aper, (S)cissors is made
+        """
+        
+        self.computer_selection = random.choice(["R", "P", "S"])
+
+    def compare_choice(self):
+        """
+        User and computer selection is compared
+        """
+        
+        ### compare when user selection is R
+        if self.user_selection == "R" and self.computer_selection == "R":
+            self.user_score += 0
+        elif self.user_selection == "R" and self.computer_selection == "P":
+            self.user_score += -1
+        elif self.user_selection == "R" and self.computer_selection == "S":
+            self.user_score += 1
+       
+        ### compare when user selection is P
+        elif self.user_selection == "P" and self.computer_selection == "P":
+            self.user_score += 0
+        elif self.user_selection == "P" and self.computer_selection == "S":
+            self.user_score += -1
+        elif self.user_selection == "P" and self.computer_selection == "R":
+            self.user_score += 1
+
+        ### compare when user selection is S
+        elif self.user_selection == "S" and self.computer_selection == "S":
+            self.user_score += 0
+        elif self.user_selection == "S" and self.computer_selection == "R":
+            self.user_score += -1
+        elif self.user_selection == "S" and self.computer_selection == "P":
+            self.user_score += 1
+
+    def display(self):
+        """
+        display user selection, computer selection, user score
+        """
+        
+        print (f"user selection: {self.user_selection}, computer selection: {self.computer_selection}, user score: {self.user_score}\n")
